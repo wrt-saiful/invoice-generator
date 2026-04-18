@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <button id="downloadPdf" class="primary-btn" type="button">Download PDF</button>
+    </header>
+
+    <main class="workspace">
+      <section class="panel form-panel">
+        <div class="section-title">
+          <h2>Invoice Details</h2>
+          <p>Keep it simple and clear.</p>
+        </div>
+
+        <div class="grid two-col branding-grid">
+          <label>
+            <span>Company Name</span>
+            <input id="companyName" type="text" value="Your Company">
+          </label>
+          <label>
+            <span>Company Logo</span>
+            <input id="companyLogo" type="file" accept="image/*">
+          </label>
+        </div>
+
+        <div class="grid two-col">
+          <label>
+            <span>Invoice Number</span>
+            <input id="invoiceNumber" type="text" placeholder="INV-XXXXXX">
+          </label>
+          <label>
+            <span>Issue Date</span>
+            <input id="issueDate" type="date">
+          </label>
+          <label>
+            <span>Due Date</span>
+            <input id="dueDate" type="date">
+          </label>
+          <label>
+            <span>Tax Rate (%)</span>
+            <input id="taxRate" type="number" min="0" step="0.01" value="10">
+          </label>
+        </div>
+
+        <div class="grid two-col">
+          <label>
+            <span>From</span>
+            <textarea id="fromDetails" rows="5">Your Company
+123 Business Street
+hello@company.com
++1 (555) 123-4567</textarea>
+          </label>
+          <label>
+            <span>Bill To</span>
+            <textarea id="billToDetails" rows="5">Client Name
+Client Company
+client@email.com
+City, Country</textarea>
+          </label>
+        </div>
+
+        <label>
+          <span>Notes</span>
+          <textarea id="notes" rows="4">Thank you for your business.</textarea>
+        </label>
+
+        <div class="section-title items-head">
+          <div>
+            <h2>Line Items</h2>
+            <p>Add products or services.</p>
+          </div>
+          <button id="addItem" class="secondary-btn" type="button">Add Item</button>
+        </div>
+
+        <div id="itemsList" class="items-list"></div>
+      </section>
+
+      <section class="panel preview-panel">
+        <article class="invoice-card" id="invoicePreview">
+          <div class="invoice-top">
+            <div class="invoice-brand">
+              <div class="brand-mark" id="previewLogoWrap" hidden>
+                <img id="previewLogo" alt="Company logo">
+              </div>
+              <div>
+                <p class="invoice-mark">INVOICE</p>
+                <p class="company-title" id="previewCompanyName">Your Company</p>
+                <h2 id="previewInvoiceNumber">INV-XXXXXX</h2>
+              </div>
+            </div>
+            <div class="date-box">
+              <div>
+                <span>Issue</span>
+                <strong id="previewIssueDate">-</strong>
+              </div>
+              <div>
+                <span>Due</span>
+                <strong id="previewDueDate">-</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="party-grid">
+            <div>
+              <p class="meta-label">From</p>
+              <div id="previewFrom" class="meta-block"></div>
+            </div>
+            <div>
+              <p class="meta-label">Bill To</p>
+              <div id="previewBillTo" class="meta-block"></div>
+            </div>
+          </div>
+
+          <table class="invoice-table">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Qty</th>
+                <th>Rate</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody id="previewItems"></tbody>
+          </table>
+
+          <div class="totals">
+            <div class="totals-row">
+              <span>Subtotal</span>
+              <strong id="subtotalValue">$0.00</strong>
+            </div>
+            <div class="totals-row">
+              <span id="taxLabel">Tax (10%)</span>
+              <strong id="taxValue">$0.00</strong>
+            </div>
+            <div class="totals-row grand-total">
+              <span>Total</span>
+              <strong id="totalValue">$0.00</strong>
+            </div>
+          </div>
+
+          <div class="notes-box">
+            <p class="meta-label">Notes</p>
+            <p id="previewNotes">Thank you for your business.</p>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <template id="itemTemplate">
+    <div class="item-row">
+      <label class="item-description">
+        <span>Description</span>
+        <input class="item-input item-name" type="text" placeholder="Website design">
+      </label>
+      <label>
+        <span>Qty</span>
+        <input class="item-input item-qty" type="number" min="0" step="1" value="1">
+      </label>
+      <label>
+        <span>Rate</span>
+        <input class="item-input item-rate" type="number" min="0" step="0.01" value="0">
+      </label>
+      <button class="icon-btn remove-item" type="button" aria-label="Remove item">Remove</button>
+    </div>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
